@@ -26,9 +26,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List _toDoList = [];
+  List<Item> _toDoList = [];
   final _toDoController = TextEditingController();
-  Map<String, dynamic> _lastRemoved;
+  Item _lastRemoved;
   int _lastRemovedPos;
 
   @override
@@ -37,37 +37,40 @@ class _HomeState extends State<Home> {
     _readData().then((value) {
       print(value);
       setState(() {
-        _toDoList = json.decode(value);
-        // final List parsed = json.decode(value);
-        // _toDoList = parsed.map((val) => Item.fromJson(val)).toList();
+        final List parsed = json.decode(value);
+        _toDoList = parsed.map((val) => Item.fromJson(val)).toList();
       });
     });
   }
 
   void _addToDo() {
     setState(() {
-      Map<String, dynamic> newToDo = Map();
-      newToDo['title'] = _toDoController.text;
+      Item newToDo = Item();
+      newToDo.title = _toDoController.text;
       _toDoController.text = '';
-      newToDo['ok'] = false;
+
+      newToDo.ok = false;
       _toDoList.add(newToDo);
       _saveData();
     });
   }
 
-Future<void> _refresh() async {
-  await Future.delayed(Duration(seconds: 1));
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 1));
 
-  setState(() {
-    _toDoList.sort((a, b) {
-    if(a['ok'] && !b['ok']) return 1;
-    else if(!a['ok'] && b['ok']) return -1;
-    else return 0;
-  });
+    setState(() {
+      _toDoList.sort((a, b) {
+        if (a.ok && !b.ok)
+          return 1;
+        else if (!a.ok && b.ok)
+          return -1;
+        else
+          return 0;
+      });
 
-  _saveData();
-  });
-}
+      _saveData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,14 +119,14 @@ Future<void> _refresh() async {
     return Dismissible(
       onDismissed: (direction) {
         setState(() {
-          _lastRemoved = Map.from(_toDoList[index]);
+          _lastRemoved = _toDoList[index];
           _lastRemovedPos = index;
           _toDoList.removeAt(index);
 
           _saveData();
 
           final snack = SnackBar(
-            content: Text('Tarefa ${_lastRemoved['title']} removida'),
+            content: Text('Tarefa ${_lastRemoved.title} removida'),
             action: SnackBarAction(
                 label: 'Desfazer',
                 onPressed: () {
@@ -151,14 +154,14 @@ Future<void> _refresh() async {
       child: CheckboxListTile(
         onChanged: (c) {
           setState(() {
-            _toDoList[index]['ok'] = c;
+            _toDoList[index].ok = c;
             _saveData();
           });
         },
-        title: Text(_toDoList[index]['title']),
-        value: _toDoList[index]['ok'],
+        title: Text(_toDoList[index].title),
+        value: _toDoList[index].ok,
         secondary: CircleAvatar(
-          child: Icon(_toDoList[index]['ok'] ? Icons.check : Icons.error),
+          child: Icon(_toDoList[index].ok ? Icons.check : Icons.error),
         ),
       ),
     );
