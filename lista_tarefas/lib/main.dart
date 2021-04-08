@@ -18,6 +18,13 @@ class Item {
     title = json['title'];
     ok = json['ok'];
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['title'] = this.title;
+    data['ok'] = this.ok;
+    return data;
+  }
 }
 
 class Home extends StatefulWidget {
@@ -126,7 +133,7 @@ class _HomeState extends State<Home> {
           _saveData();
 
           final snack = SnackBar(
-            content: Text('Tarefa ${_lastRemoved.title} removida'),
+            content: Text('Tarefa \"${_lastRemoved.title}\" removida'),
             action: SnackBarAction(
                 label: 'Desfazer',
                 onPressed: () {
@@ -142,14 +149,15 @@ class _HomeState extends State<Home> {
       },
       key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
       background: Container(
-          color: Colors.red,
-          child: Align(
-            alignment: Alignment(-0.9, 0),
-            child: Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-          )),
+        color: Colors.red,
+        child: Align(
+          alignment: Alignment(-0.9, 0),
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+        ),
+      ),
       direction: DismissDirection.startToEnd,
       child: CheckboxListTile(
         onChanged: (c) {
