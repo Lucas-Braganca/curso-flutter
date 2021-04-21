@@ -19,7 +19,10 @@ class QuizWidget extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          AnswerWidget(title: "Possibilita a criação de aplicativos compilados nativamente")
+          AnswerWidget(title: "Possibilita a criação de aplicativos compilados nativamente", isSelected: true, isRight: true,),
+          AnswerWidget(title: "Possibilita a criação de aplicativos compilados nativamente",isSelected: false, isRight: false,),
+          AnswerWidget(title: "Possibilita a criação de aplicativos compilados nativamente"),
+          AnswerWidget(title: "Possibilita a criação de aplicativos compilados nativamente"),
         ],
       ),
     );
