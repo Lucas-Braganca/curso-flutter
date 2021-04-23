@@ -24,6 +24,7 @@ class QuizCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
