@@ -1,9 +1,15 @@
 import 'package:devquiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:devquiz/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:devquiz/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:devquiz/shared/models/question_model.dart';
 import 'package:flutter/material.dart';
 
 class ChallengePage extends StatefulWidget {
+
+  final List<QuestionModel> questions;
+
+  const ChallengePage({Key? key, required this.questions}) : super(key: key);
+
   @override
   _ChallengePageState createState() => _ChallengePageState();
 }
@@ -13,10 +19,23 @@ class _ChallengePageState extends State<ChallengePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: SafeArea(top: true, child: QuestionIndicatorWidget()),
+        preferredSize: Size.fromHeight(86),
+        child: SafeArea(
+          top: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(icon: Icon(Icons.close),onPressed: (){
+                Navigator.pop(context);
+              },),
+              QuestionIndicatorWidget(),
+            ],
+          ),
+        ),
       ),
-      body: QuizWidget(title: "Quiz title para teste"),
+      body: QuizWidget(
+        question: widget.questions[0],
+      ),
       bottomNavigationBar: SafeArea(
         bottom: true,
         child: Padding(
