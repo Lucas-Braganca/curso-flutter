@@ -79,9 +79,9 @@ class _ChallengePageState extends State<ChallengePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         if (value < widget.questions.length)
-                        Expanded(
-                            child: NextButtonWidget.white(
-                                label: 'Pular', onTap: nextPage)),
+                          Expanded(
+                              child: NextButtonWidget.white(
+                                  label: 'Pular', onTap: nextPage)),
                         if (value == widget.questions.length)
                           Expanded(
                               child: NextButtonWidget.green(
