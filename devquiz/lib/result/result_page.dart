@@ -64,7 +64,7 @@ class ResultPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 68),
                       child: NextButtonWidget.purple(
                           label: 'Compartilhar', onTap: () {
-                            Share.share('Resultado: $title\mObtive ${result/length}% de aproveitamento');
+                            Share.share('Resultado: $title\mObtive ${(result/length)*100}% de aproveitamento');
                           }),
                     )),
                   ],
